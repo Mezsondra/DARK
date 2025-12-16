@@ -233,7 +233,13 @@ class DMP_Admin {
             wp_send_json_error(__('Invalid settings', 'dark-mode-pro'));
         }
 
-        $sanitized = $this->sanitize_options($settings);
+        // Merge incoming settings with existing options so partial updates
+        // (e.g., selecting a theme or toggle style) don't wipe out other
+        // saved preferences.
+        $current_options = get_option('dmp_options', dark_mode_pro()->get_default_options());
+        $merged_settings = wp_parse_args($settings, $current_options);
+
+        $sanitized = $this->sanitize_options($merged_settings);
         update_option('dmp_options', $sanitized);
 
         wp_send_json_success(array(
