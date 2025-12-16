@@ -285,63 +285,67 @@ $custom_colors = $options['custom_colors'];
 </style>
 
 <script>
+function dmpWaitForAdminApp(callback) {
+    if (window.DmpAdminApp) {
+        callback(window.DmpAdminApp);
+    } else {
+        setTimeout(function() { dmpWaitForAdminApp(callback); }, 50);
+    }
+}
+
 jQuery(document).ready(function($) {
-    var adminApp = window.DmpAdminApp;
+    dmpWaitForAdminApp(function(adminApp) {
+        $('.dmp-select-preset-btn').on('click', function() {
+            var preset = $(this).data('preset');
+            var $card = $(this).closest('.dmp-preset-card');
 
-    if (!adminApp) {
-        return;
-    }
+            adminApp.saveOptionsFragment({ color_preset: preset }, {
+                button: $(this),
+                restoreButtonContent: false,
+                successMessage: '<?php echo esc_js(__('Color preset saved.', 'dark-mode-pro')); ?>',
+                onSuccess: function() {
+                    $('.dmp-preset-card, .dmp-custom-colors-card').removeClass('active');
+                    $('.dmp-select-preset-btn').text('<?php echo esc_js(__('Select', 'dark-mode-pro')); ?>');
+                    $('.dmp-active-badge').remove();
 
-    $('.dmp-select-preset-btn').on('click', function() {
-        var preset = $(this).data('preset');
-        var $card = $(this).closest('.dmp-preset-card');
+                    $card.addClass('active');
+                    $card.find('.dmp-select-preset-btn').text('<?php echo esc_js(__('Selected', 'dark-mode-pro')); ?>');
+                    $card.find('.dmp-preset-info').append('<span class="dmp-active-badge"><?php echo esc_js(__('Active', 'dark-mode-pro')); ?></span>');
+                }
+            });
+        });
 
-        adminApp.saveOptionsFragment({ color_preset: preset }, {
-            button: $(this),
-            restoreButtonContent: false,
-            successMessage: '<?php echo esc_js(__('Color preset saved.', 'dark-mode-pro')); ?>',
-            onSuccess: function() {
-                $('.dmp-preset-card, .dmp-custom-colors-card').removeClass('active');
-                $('.dmp-select-preset-btn').text('<?php echo esc_js(__('Select', 'dark-mode-pro')); ?>');
-                $('.dmp-active-badge').remove();
+        // Save custom colors
+        $('.dmp-save-custom-btn').on('click', function() {
+            var customColors = {};
+            $('.dmp-color-picker').each(function() {
+                var key = $(this).data('color-key');
+                customColors[key] = $(this).val();
+            });
 
-                $card.addClass('active');
-                $card.find('.dmp-select-preset-btn').text('<?php echo esc_js(__('Selected', 'dark-mode-pro')); ?>');
-                $card.find('.dmp-preset-info').append('<span class="dmp-active-badge"><?php echo esc_js(__('Active', 'dark-mode-pro')); ?></span>');
+            adminApp.saveOptionsFragment({
+                color_preset: 'custom',
+                custom_colors: customColors
+            }, {
+                button: $(this),
+                successMessage: '<?php echo esc_js(__('Custom colors saved and activated!', 'dark-mode-pro')); ?>',
+                onSuccess: function() {
+                    $('.dmp-preset-card').removeClass('active');
+                    $('.dmp-select-preset-btn').text('<?php echo esc_js(__('Select', 'dark-mode-pro')); ?>');
+                    $('.dmp-active-badge').remove();
+                    $('.dmp-custom-colors-card').addClass('active');
+                }
+            });
+        });
+
+        function updateCustomPreview() {
+            if (typeof adminApp.updateCustomPreview === 'function') {
+                adminApp.updateCustomPreview();
             }
-        });
-    });
-
-    // Save custom colors
-    $('.dmp-save-custom-btn').on('click', function() {
-        var customColors = {};
-        $('.dmp-color-picker').each(function() {
-            var key = $(this).data('color-key');
-            customColors[key] = $(this).val();
-        });
-
-        adminApp.saveOptionsFragment({
-            color_preset: 'custom',
-            custom_colors: customColors
-        }, {
-            button: $(this),
-            successMessage: '<?php echo esc_js(__('Custom colors saved and activated!', 'dark-mode-pro')); ?>',
-            onSuccess: function() {
-                $('.dmp-preset-card').removeClass('active');
-                $('.dmp-select-preset-btn').text('<?php echo esc_js(__('Select', 'dark-mode-pro')); ?>');
-                $('.dmp-active-badge').remove();
-                $('.dmp-custom-colors-card').addClass('active');
-            }
-        });
-    });
-
-    function updateCustomPreview() {
-        if (typeof adminApp.updateCustomPreview === 'function') {
-            adminApp.updateCustomPreview();
         }
-    }
 
-    // Initial preview
-    updateCustomPreview();
+        // Initial preview
+        updateCustomPreview();
+    });
 });
 </script>

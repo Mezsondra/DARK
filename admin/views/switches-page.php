@@ -160,30 +160,35 @@ $current_style = $options['switch_style'];
 </style>
 
 <script>
+function dmpWaitForAdminApp(callback) {
+    if (window.DmpAdminApp) {
+        callback(window.DmpAdminApp);
+    } else {
+        setTimeout(function() { dmpWaitForAdminApp(callback); }, 50);
+    }
+}
+
 jQuery(document).ready(function($) {
-    $('.dmp-select-style-btn').on('click', function() {
-        var style = $(this).data('style');
-        var $card = $(this).closest('.dmp-style-card');
-        var adminApp = window.DmpAdminApp;
+    dmpWaitForAdminApp(function(adminApp) {
+        $('.dmp-select-style-btn').on('click', function() {
+            var style = $(this).data('style');
+            var $card = $(this).closest('.dmp-style-card');
 
-        if (!adminApp) {
-            return;
-        }
+            adminApp.saveOptionsFragment({ switch_style: style }, {
+                button: $(this),
+                restoreButtonContent: false,
+                successMessage: '<?php echo esc_js(__('Switch style saved.', 'dark-mode-pro')); ?>',
+                onSuccess: function() {
+                    // Update UI
+                    $('.dmp-style-card').removeClass('active');
+                    $('.dmp-select-style-btn').text('<?php echo esc_js(__('Select', 'dark-mode-pro')); ?>');
+                    $('.dmp-active-badge').remove();
 
-        adminApp.saveOptionsFragment({ switch_style: style }, {
-            button: $(this),
-            restoreButtonContent: false,
-            successMessage: '<?php echo esc_js(__('Switch style saved.', 'dark-mode-pro')); ?>',
-            onSuccess: function() {
-                // Update UI
-                $('.dmp-style-card').removeClass('active');
-                $('.dmp-select-style-btn').text('<?php echo esc_js(__('Select', 'dark-mode-pro')); ?>');
-                $('.dmp-active-badge').remove();
-
-                $card.addClass('active');
-                $card.find('.dmp-select-style-btn').text('<?php echo esc_js(__('Selected', 'dark-mode-pro')); ?>');
-                $card.find('.dmp-style-info').append('<span class="dmp-active-badge"><?php echo esc_js(__('Active', 'dark-mode-pro')); ?></span>');
-            }
+                    $card.addClass('active');
+                    $card.find('.dmp-select-style-btn').text('<?php echo esc_js(__('Selected', 'dark-mode-pro')); ?>');
+                    $card.find('.dmp-style-info').append('<span class="dmp-active-badge"><?php echo esc_js(__('Active', 'dark-mode-pro')); ?></span>');
+                }
+            });
         });
     });
 });
