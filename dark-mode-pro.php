@@ -322,21 +322,21 @@ final class Dark_Mode_Pro {
         // Color picker
         wp_enqueue_style('wp-color-picker');
 
-        // Admin JS
-        wp_enqueue_script(
-            'dmp-admin',
-            DMP_PLUGIN_URL . 'admin/js/admin.js',
-            array('jquery', 'wp-color-picker', 'chart-js'),
-            DMP_VERSION,
-            true
-        );
-
         // Chart.js for analytics
         wp_enqueue_script(
             'chart-js',
             'https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js',
             array(),
             '4.4.1',
+            true
+        );
+
+        // Admin JS
+        wp_enqueue_script(
+            'dmp-admin',
+            DMP_PLUGIN_URL . 'admin/js/admin.js',
+            array('jquery', 'wp-color-picker', 'chart-js'),
+            DMP_VERSION,
             true
         );
 
