@@ -1,0 +1,557 @@
+/**
+ * Dark Mode Pro - Main Styles
+ *
+ * @package Dark_Mode_Pro
+ */
+
+/* ==========================================================================
+   CSS Variables & Transitions
+   ========================================================================== */
+
+:root {
+    --dmp-transition-duration: 300ms;
+}
+
+/* Global transition for dark mode toggle */
+body,
+body *,
+body *::before,
+body *::after {
+    transition-property: background-color, border-color, color, fill, stroke, box-shadow;
+    transition-duration: var(--dmp-transition-duration);
+    transition-timing-function: ease;
+}
+
+/* Exclude certain elements from transitions */
+body img,
+body video,
+body canvas,
+body svg:not(.dmp-icon-sun):not(.dmp-icon-moon),
+body iframe,
+body [data-no-transition] {
+    transition: none !important;
+}
+
+/* ==========================================================================
+   Dark Mode Base Styles
+   ========================================================================== */
+
+body.dmp-dark-mode {
+    background-color: var(--dmp-bg, #1a1a2e);
+    color: var(--dmp-text, #e4e4e4);
+}
+
+/* Backgrounds */
+body.dmp-dark-mode article,
+body.dmp-dark-mode section,
+body.dmp-dark-mode aside,
+body.dmp-dark-mode header,
+body.dmp-dark-mode footer,
+body.dmp-dark-mode nav,
+body.dmp-dark-mode main,
+body.dmp-dark-mode div:not([class*="dmp-"]),
+body.dmp-dark-mode .widget,
+body.dmp-dark-mode .sidebar,
+body.dmp-dark-mode .entry-content,
+body.dmp-dark-mode .post,
+body.dmp-dark-mode .page,
+body.dmp-dark-mode .comment,
+body.dmp-dark-mode .card {
+    background-color: var(--dmp-bg, #1a1a2e);
+}
+
+/* Surface elements (slightly lighter than background) */
+body.dmp-dark-mode .card,
+body.dmp-dark-mode .panel,
+body.dmp-dark-mode .box,
+body.dmp-dark-mode .modal,
+body.dmp-dark-mode .popup,
+body.dmp-dark-mode .dropdown-menu,
+body.dmp-dark-mode .submenu,
+body.dmp-dark-mode input,
+body.dmp-dark-mode textarea,
+body.dmp-dark-mode select,
+body.dmp-dark-mode pre,
+body.dmp-dark-mode code,
+body.dmp-dark-mode blockquote {
+    background-color: var(--dmp-surface, #16213e);
+}
+
+/* Text colors */
+body.dmp-dark-mode h1,
+body.dmp-dark-mode h2,
+body.dmp-dark-mode h3,
+body.dmp-dark-mode h4,
+body.dmp-dark-mode h5,
+body.dmp-dark-mode h6,
+body.dmp-dark-mode .entry-title,
+body.dmp-dark-mode .post-title,
+body.dmp-dark-mode .page-title,
+body.dmp-dark-mode .widget-title {
+    color: var(--dmp-text, #e4e4e4);
+}
+
+body.dmp-dark-mode p,
+body.dmp-dark-mode span,
+body.dmp-dark-mode li,
+body.dmp-dark-mode td,
+body.dmp-dark-mode th,
+body.dmp-dark-mode label,
+body.dmp-dark-mode .entry-content,
+body.dmp-dark-mode .post-content {
+    color: var(--dmp-text, #e4e4e4);
+}
+
+/* Secondary text */
+body.dmp-dark-mode .meta,
+body.dmp-dark-mode .date,
+body.dmp-dark-mode .author,
+body.dmp-dark-mode .category,
+body.dmp-dark-mode .tag,
+body.dmp-dark-mode .caption,
+body.dmp-dark-mode figcaption,
+body.dmp-dark-mode small,
+body.dmp-dark-mode .text-muted,
+body.dmp-dark-mode .text-secondary,
+body.dmp-dark-mode time {
+    color: var(--dmp-text-secondary, #a0a0a0);
+}
+
+/* Links */
+body.dmp-dark-mode a:not(.button):not(.btn):not([class*="dmp-"]) {
+    color: var(--dmp-link, #4da8da);
+}
+
+body.dmp-dark-mode a:not(.button):not(.btn):not([class*="dmp-"]):hover {
+    color: var(--dmp-accent, #e94560);
+}
+
+/* ==========================================================================
+   Form Elements
+   ========================================================================== */
+
+body.dmp-dark-mode input[type="text"],
+body.dmp-dark-mode input[type="email"],
+body.dmp-dark-mode input[type="password"],
+body.dmp-dark-mode input[type="search"],
+body.dmp-dark-mode input[type="tel"],
+body.dmp-dark-mode input[type="url"],
+body.dmp-dark-mode input[type="number"],
+body.dmp-dark-mode input[type="date"],
+body.dmp-dark-mode textarea,
+body.dmp-dark-mode select {
+    background-color: var(--dmp-surface, #16213e);
+    color: var(--dmp-text, #e4e4e4);
+    border-color: var(--dmp-border, #2a2a4a);
+}
+
+body.dmp-dark-mode input::placeholder,
+body.dmp-dark-mode textarea::placeholder {
+    color: var(--dmp-text-secondary, #a0a0a0);
+}
+
+body.dmp-dark-mode input:focus,
+body.dmp-dark-mode textarea:focus,
+body.dmp-dark-mode select:focus {
+    border-color: var(--dmp-accent, #e94560);
+    outline-color: var(--dmp-accent, #e94560);
+}
+
+/* Buttons */
+body.dmp-dark-mode button,
+body.dmp-dark-mode .button,
+body.dmp-dark-mode .btn,
+body.dmp-dark-mode input[type="submit"],
+body.dmp-dark-mode input[type="button"] {
+    background-color: var(--dmp-primary, #0f3460);
+    color: var(--dmp-text, #e4e4e4);
+    border-color: var(--dmp-border, #2a2a4a);
+}
+
+body.dmp-dark-mode button:hover,
+body.dmp-dark-mode .button:hover,
+body.dmp-dark-mode .btn:hover,
+body.dmp-dark-mode input[type="submit"]:hover,
+body.dmp-dark-mode input[type="button"]:hover {
+    background-color: var(--dmp-accent, #e94560);
+    border-color: var(--dmp-accent, #e94560);
+}
+
+/* ==========================================================================
+   Tables
+   ========================================================================== */
+
+body.dmp-dark-mode table {
+    background-color: var(--dmp-surface, #16213e);
+    border-color: var(--dmp-border, #2a2a4a);
+}
+
+body.dmp-dark-mode th {
+    background-color: var(--dmp-primary, #0f3460);
+    color: var(--dmp-text, #e4e4e4);
+}
+
+body.dmp-dark-mode td {
+    border-color: var(--dmp-border, #2a2a4a);
+}
+
+body.dmp-dark-mode tr:nth-child(even) {
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+body.dmp-dark-mode tr:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* ==========================================================================
+   Code & Pre
+   ========================================================================== */
+
+body.dmp-dark-mode code {
+    background-color: var(--dmp-primary, #0f3460);
+    color: var(--dmp-accent, #e94560);
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+body.dmp-dark-mode pre {
+    background-color: var(--dmp-surface, #16213e);
+    border-color: var(--dmp-border, #2a2a4a);
+    color: var(--dmp-text, #e4e4e4);
+}
+
+body.dmp-dark-mode pre code {
+    background-color: transparent;
+    color: inherit;
+    padding: 0;
+}
+
+/* ==========================================================================
+   Borders & Separators
+   ========================================================================== */
+
+body.dmp-dark-mode hr {
+    border-color: var(--dmp-border, #2a2a4a);
+}
+
+body.dmp-dark-mode .border,
+body.dmp-dark-mode [class*="border-"] {
+    border-color: var(--dmp-border, #2a2a4a) !important;
+}
+
+/* ==========================================================================
+   Blockquotes
+   ========================================================================== */
+
+body.dmp-dark-mode blockquote {
+    background-color: var(--dmp-surface, #16213e);
+    border-left-color: var(--dmp-accent, #e94560);
+    color: var(--dmp-text-secondary, #a0a0a0);
+}
+
+body.dmp-dark-mode blockquote cite {
+    color: var(--dmp-text-secondary, #a0a0a0);
+}
+
+/* ==========================================================================
+   Images & Media
+   ========================================================================== */
+
+body.dmp-dark-mode img {
+    /* Slight brightness reduction for images */
+    filter: brightness(0.9);
+}
+
+body.dmp-dark-mode img:hover {
+    filter: brightness(1);
+}
+
+/* Exclude specific images */
+body.dmp-dark-mode img.no-dark-filter,
+body.dmp-dark-mode img[data-no-filter],
+body.dmp-dark-mode .logo img,
+body.dmp-dark-mode .brand img {
+    filter: none;
+}
+
+/* Invert dark images for visibility */
+body.dmp-dark-mode img.invert-in-dark,
+body.dmp-dark-mode img[data-invert-dark] {
+    filter: invert(1) hue-rotate(180deg);
+}
+
+/* ==========================================================================
+   Scrollbar Styling
+   ========================================================================== */
+
+body.dmp-dark-mode::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+}
+
+body.dmp-dark-mode::-webkit-scrollbar-track {
+    background: var(--dmp-bg, #1a1a2e);
+}
+
+body.dmp-dark-mode::-webkit-scrollbar-thumb {
+    background: var(--dmp-primary, #0f3460);
+    border-radius: 6px;
+    border: 3px solid var(--dmp-bg, #1a1a2e);
+}
+
+body.dmp-dark-mode::-webkit-scrollbar-thumb:hover {
+    background: var(--dmp-accent, #e94560);
+}
+
+/* Firefox */
+body.dmp-dark-mode {
+    scrollbar-color: var(--dmp-primary, #0f3460) var(--dmp-bg, #1a1a2e);
+    scrollbar-width: thin;
+}
+
+/* ==========================================================================
+   Selection
+   ========================================================================== */
+
+body.dmp-dark-mode ::selection {
+    background-color: var(--dmp-accent, #e94560);
+    color: #fff;
+}
+
+body.dmp-dark-mode ::-moz-selection {
+    background-color: var(--dmp-accent, #e94560);
+    color: #fff;
+}
+
+/* ==========================================================================
+   Navigation
+   ========================================================================== */
+
+body.dmp-dark-mode nav,
+body.dmp-dark-mode .navigation,
+body.dmp-dark-mode .menu,
+body.dmp-dark-mode .navbar {
+    background-color: var(--dmp-surface, #16213e);
+}
+
+body.dmp-dark-mode .nav-link,
+body.dmp-dark-mode .menu-item a {
+    color: var(--dmp-text, #e4e4e4);
+}
+
+body.dmp-dark-mode .nav-link:hover,
+body.dmp-dark-mode .menu-item a:hover,
+body.dmp-dark-mode .nav-link.active,
+body.dmp-dark-mode .menu-item.current-menu-item a {
+    color: var(--dmp-accent, #e94560);
+}
+
+body.dmp-dark-mode .dropdown-menu,
+body.dmp-dark-mode .sub-menu {
+    background-color: var(--dmp-surface, #16213e);
+    border-color: var(--dmp-border, #2a2a4a);
+}
+
+/* ==========================================================================
+   Pagination
+   ========================================================================== */
+
+body.dmp-dark-mode .pagination,
+body.dmp-dark-mode .nav-links {
+    color: var(--dmp-text, #e4e4e4);
+}
+
+body.dmp-dark-mode .page-numbers,
+body.dmp-dark-mode .pagination a {
+    background-color: var(--dmp-surface, #16213e);
+    color: var(--dmp-text, #e4e4e4);
+    border-color: var(--dmp-border, #2a2a4a);
+}
+
+body.dmp-dark-mode .page-numbers.current,
+body.dmp-dark-mode .pagination .active {
+    background-color: var(--dmp-accent, #e94560);
+    color: #fff;
+    border-color: var(--dmp-accent, #e94560);
+}
+
+/* ==========================================================================
+   Widgets
+   ========================================================================== */
+
+body.dmp-dark-mode .widget {
+    background-color: var(--dmp-surface, #16213e);
+    border-color: var(--dmp-border, #2a2a4a);
+}
+
+body.dmp-dark-mode .widget-title {
+    color: var(--dmp-text, #e4e4e4);
+    border-bottom-color: var(--dmp-accent, #e94560);
+}
+
+/* ==========================================================================
+   Comments
+   ========================================================================== */
+
+body.dmp-dark-mode .comment,
+body.dmp-dark-mode .comment-body {
+    background-color: var(--dmp-surface, #16213e);
+    border-color: var(--dmp-border, #2a2a4a);
+}
+
+body.dmp-dark-mode .comment-author {
+    color: var(--dmp-text, #e4e4e4);
+}
+
+body.dmp-dark-mode .comment-content {
+    color: var(--dmp-text, #e4e4e4);
+}
+
+body.dmp-dark-mode .comment-meta {
+    color: var(--dmp-text-secondary, #a0a0a0);
+}
+
+/* ==========================================================================
+   Alerts & Notices
+   ========================================================================== */
+
+body.dmp-dark-mode .alert,
+body.dmp-dark-mode .notice {
+    background-color: var(--dmp-surface, #16213e);
+    border-color: var(--dmp-border, #2a2a4a);
+}
+
+body.dmp-dark-mode .alert-success {
+    background-color: rgba(46, 204, 113, 0.1);
+    border-color: #2ecc71;
+    color: #2ecc71;
+}
+
+body.dmp-dark-mode .alert-warning {
+    background-color: rgba(241, 196, 15, 0.1);
+    border-color: #f1c40f;
+    color: #f1c40f;
+}
+
+body.dmp-dark-mode .alert-danger,
+body.dmp-dark-mode .alert-error {
+    background-color: rgba(231, 76, 60, 0.1);
+    border-color: #e74c3c;
+    color: #e74c3c;
+}
+
+body.dmp-dark-mode .alert-info {
+    background-color: rgba(52, 152, 219, 0.1);
+    border-color: #3498db;
+    color: #3498db;
+}
+
+/* ==========================================================================
+   Box Shadows
+   ========================================================================== */
+
+body.dmp-dark-mode .shadow,
+body.dmp-dark-mode [class*="shadow-"] {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* ==========================================================================
+   Popular Theme Support
+   ========================================================================== */
+
+/* WooCommerce */
+body.dmp-dark-mode .woocommerce .product,
+body.dmp-dark-mode .woocommerce .products {
+    background-color: var(--dmp-surface, #16213e);
+}
+
+body.dmp-dark-mode .woocommerce .price {
+    color: var(--dmp-accent, #e94560);
+}
+
+body.dmp-dark-mode .woocommerce .star-rating span::before {
+    color: #f1c40f;
+}
+
+/* Elementor */
+body.dmp-dark-mode .elementor-section,
+body.dmp-dark-mode .elementor-widget {
+    background-color: transparent;
+}
+
+body.dmp-dark-mode .elementor-widget-container {
+    color: var(--dmp-text, #e4e4e4);
+}
+
+/* Gutenberg Blocks */
+body.dmp-dark-mode .wp-block-group,
+body.dmp-dark-mode .wp-block-cover,
+body.dmp-dark-mode .wp-block-media-text {
+    background-color: var(--dmp-surface, #16213e);
+}
+
+body.dmp-dark-mode .wp-block-quote {
+    border-left-color: var(--dmp-accent, #e94560);
+}
+
+body.dmp-dark-mode .wp-block-separator {
+    border-color: var(--dmp-border, #2a2a4a);
+}
+
+/* ==========================================================================
+   Utility Classes
+   ========================================================================== */
+
+/* Force light mode on specific elements */
+.dmp-no-dark,
+[data-no-dark],
+.dmp-force-light {
+    background-color: inherit !important;
+    color: inherit !important;
+}
+
+body.dmp-dark-mode .dmp-no-dark *,
+body.dmp-dark-mode [data-no-dark] * {
+    background-color: inherit !important;
+    color: inherit !important;
+}
+
+/* Force dark mode on specific elements */
+.dmp-force-dark {
+    background-color: var(--dmp-bg, #1a1a2e) !important;
+    color: var(--dmp-text, #e4e4e4) !important;
+}
+
+/* ==========================================================================
+   Print Styles
+   ========================================================================== */
+
+@media print {
+    body.dmp-dark-mode {
+        background-color: #fff !important;
+        color: #000 !important;
+    }
+
+    body.dmp-dark-mode * {
+        background-color: #fff !important;
+        color: #000 !important;
+        box-shadow: none !important;
+    }
+
+    body.dmp-dark-mode img {
+        filter: none !important;
+    }
+}
+
+/* ==========================================================================
+   Reduced Motion
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+    body,
+    body *,
+    body *::before,
+    body *::after {
+        transition-duration: 0.01ms !important;
+    }
+}

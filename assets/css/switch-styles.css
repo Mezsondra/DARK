@@ -1,0 +1,1558 @@
+/**
+ * Dark Mode Pro - Toggle Switch Styles
+ * 24+ professionally designed toggle switch styles
+ *
+ * @package Dark_Mode_Pro
+ */
+
+/* ==========================================================================
+   Base Styles
+   ========================================================================== */
+
+.dmp-toggle-wrapper {
+    position: fixed;
+    z-index: 999999;
+    padding: 10px;
+}
+
+/* Positions */
+.dmp-position-bottom-right {
+    bottom: 20px;
+    right: 20px;
+}
+
+.dmp-position-bottom-left {
+    bottom: 20px;
+    left: 20px;
+}
+
+.dmp-position-top-right {
+    top: 20px;
+    right: 20px;
+}
+
+.dmp-position-top-left {
+    top: 20px;
+    left: 20px;
+}
+
+.dmp-position-middle-right {
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+}
+
+.dmp-position-middle-left {
+    top: 50%;
+    left: 20px;
+    transform: translateY(-50%);
+}
+
+/* Sizes */
+.dmp-size-small .dmp-switch {
+    transform: scale(0.75);
+}
+
+.dmp-size-medium .dmp-switch {
+    transform: scale(1);
+}
+
+.dmp-size-large .dmp-switch {
+    transform: scale(1.25);
+}
+
+.dmp-size-xlarge .dmp-switch {
+    transform: scale(1.5);
+}
+
+/* Hide on mobile */
+@media (max-width: 768px) {
+    .dmp-hide-mobile {
+        display: none !important;
+    }
+}
+
+/* Screen reader only */
+.dmp-sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Common switch styles */
+.dmp-switch {
+    cursor: pointer;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.dmp-toggle-input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* Icons */
+.dmp-icon-sun,
+.dmp-icon-moon {
+    width: 20px;
+    height: 20px;
+    transition: all 0.3s ease;
+}
+
+/* ==========================================================================
+   Style 1: Classic Toggle
+   ========================================================================== */
+
+.dmp-switch-classic {
+    display: inline-block;
+}
+
+.dmp-switch-classic .dmp-toggle-track {
+    display: block;
+    width: 60px;
+    height: 32px;
+    background: #e0e0e0;
+    border-radius: 16px;
+    position: relative;
+    transition: background 0.3s ease;
+}
+
+.dmp-switch-classic .dmp-toggle-thumb {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 26px;
+    height: 26px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    transition: transform 0.3s ease;
+}
+
+.dmp-switch-classic .dmp-toggle-input:checked + .dmp-toggle-track {
+    background: #1a1a2e;
+}
+
+.dmp-switch-classic .dmp-toggle-input:checked + .dmp-toggle-track .dmp-toggle-thumb {
+    transform: translateX(28px);
+}
+
+/* ==========================================================================
+   Style 2: iOS Style
+   ========================================================================== */
+
+.dmp-switch-ios {
+    display: inline-block;
+}
+
+.dmp-switch-ios .dmp-toggle-track {
+    display: block;
+    width: 51px;
+    height: 31px;
+    background: #e9e9eb;
+    border-radius: 15.5px;
+    position: relative;
+    transition: background 0.3s ease;
+}
+
+.dmp-switch-ios .dmp-toggle-thumb {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 27px;
+    height: 27px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.15), 0 3px 1px rgba(0,0,0,0.06);
+    transition: transform 0.25s ease;
+}
+
+.dmp-switch-ios .dmp-toggle-input:checked + .dmp-toggle-track {
+    background: #34c759;
+}
+
+body.dmp-dark-mode .dmp-switch-ios .dmp-toggle-input:checked + .dmp-toggle-track {
+    background: #30d158;
+}
+
+.dmp-switch-ios .dmp-toggle-input:checked + .dmp-toggle-track .dmp-toggle-thumb {
+    transform: translateX(20px);
+}
+
+/* ==========================================================================
+   Style 3: Android Material
+   ========================================================================== */
+
+.dmp-switch-android {
+    display: inline-block;
+}
+
+.dmp-switch-android .dmp-toggle-track {
+    display: block;
+    width: 36px;
+    height: 14px;
+    background: rgba(0,0,0,0.38);
+    border-radius: 7px;
+    position: relative;
+    transition: background 0.3s ease;
+}
+
+.dmp-switch-android .dmp-toggle-thumb {
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    width: 20px;
+    height: 20px;
+    background: #fafafa;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    transition: transform 0.15s ease, background 0.3s ease;
+}
+
+.dmp-switch-android .dmp-toggle-input:checked + .dmp-toggle-track {
+    background: rgba(26, 26, 46, 0.5);
+}
+
+.dmp-switch-android .dmp-toggle-input:checked + .dmp-toggle-track .dmp-toggle-thumb {
+    transform: translateX(22px);
+    background: #1a1a2e;
+}
+
+/* ==========================================================================
+   Style 4: Flat Toggle
+   ========================================================================== */
+
+.dmp-switch-flat {
+    display: inline-block;
+}
+
+.dmp-switch-flat .dmp-toggle-track {
+    display: block;
+    width: 56px;
+    height: 28px;
+    background: #f0f0f0;
+    border-radius: 4px;
+    position: relative;
+    transition: background 0.3s ease;
+}
+
+.dmp-switch-flat .dmp-toggle-thumb {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 24px;
+    height: 24px;
+    background: #999;
+    border-radius: 2px;
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.dmp-switch-flat .dmp-toggle-input:checked + .dmp-toggle-track {
+    background: #1a1a2e;
+}
+
+.dmp-switch-flat .dmp-toggle-input:checked + .dmp-toggle-track .dmp-toggle-thumb {
+    transform: translateX(28px);
+    background: #fff;
+}
+
+/* ==========================================================================
+   Style 5: 3D Toggle
+   ========================================================================== */
+
+.dmp-switch-3d {
+    display: inline-block;
+}
+
+.dmp-switch-3d .dmp-toggle-track {
+    display: block;
+    width: 64px;
+    height: 32px;
+    background: linear-gradient(to bottom, #d0d0d0, #e8e8e8);
+    border-radius: 16px;
+    position: relative;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+}
+
+.dmp-switch-3d .dmp-toggle-thumb {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 28px;
+    height: 28px;
+    background: linear-gradient(to bottom, #fff, #f0f0f0);
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.8);
+    transition: transform 0.3s ease;
+}
+
+.dmp-switch-3d .dmp-toggle-input:checked + .dmp-toggle-track {
+    background: linear-gradient(to bottom, #0f1a2e, #1a2a4e);
+}
+
+.dmp-switch-3d .dmp-toggle-input:checked + .dmp-toggle-track .dmp-toggle-thumb {
+    transform: translateX(32px);
+}
+
+/* ==========================================================================
+   Style 6: Skeuomorphic
+   ========================================================================== */
+
+.dmp-switch-skeuomorphic {
+    display: inline-block;
+}
+
+.dmp-switch-skeuomorphic .dmp-toggle-track {
+    display: block;
+    width: 70px;
+    height: 34px;
+    background: linear-gradient(to bottom, #c0c0c0, #d8d8d8);
+    border-radius: 17px;
+    position: relative;
+    box-shadow: inset 0 3px 8px rgba(0,0,0,0.3), 0 1px 0 rgba(255,255,255,0.8);
+    border: 1px solid #a0a0a0;
+    transition: all 0.3s ease;
+}
+
+.dmp-switch-skeuomorphic .dmp-toggle-thumb {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 30px;
+    height: 30px;
+    background: linear-gradient(to bottom, #fff 0%, #e8e8e8 50%, #d0d0d0 100%);
+    border-radius: 50%;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.3), inset 0 2px 0 rgba(255,255,255,1);
+    border: 1px solid #b0b0b0;
+    transition: transform 0.3s ease;
+}
+
+.dmp-switch-skeuomorphic .dmp-toggle-input:checked + .dmp-toggle-track {
+    background: linear-gradient(to bottom, #1a1a2e, #2a3a5e);
+    border-color: #0f1a2e;
+}
+
+.dmp-switch-skeuomorphic .dmp-toggle-input:checked + .dmp-toggle-track .dmp-toggle-thumb {
+    transform: translateX(36px);
+}
+
+/* ==========================================================================
+   Style 7: Sun & Moon
+   ========================================================================== */
+
+.dmp-switch-sun_moon {
+    display: inline-block;
+}
+
+.dmp-switch-sun_moon .dmp-toggle-track {
+    display: block;
+    width: 64px;
+    height: 32px;
+    background: linear-gradient(to right, #87ceeb, #ffd700);
+    border-radius: 16px;
+    position: relative;
+    transition: background 0.5s ease;
+    overflow: hidden;
+}
+
+.dmp-switch-sun_moon .dmp-toggle-thumb {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 28px;
+    height: 28px;
+    background: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.5s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.dmp-switch-sun_moon .dmp-icon-sun {
+    color: #ff8c00;
+    position: absolute;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+.dmp-switch-sun_moon .dmp-icon-moon {
+    color: #4a5568;
+    position: absolute;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.dmp-switch-sun_moon .dmp-toggle-input:checked + .dmp-toggle-track {
+    background: linear-gradient(to right, #1a1a2e, #2d3748);
+}
+
+.dmp-switch-sun_moon .dmp-toggle-input:checked + .dmp-toggle-track .dmp-toggle-thumb {
+    transform: translateX(32px);
+    background: #f7fafc;
+}
+
+.dmp-switch-sun_moon .dmp-toggle-input:checked + .dmp-toggle-track .dmp-icon-sun {
+    opacity: 0;
+}
+
+.dmp-switch-sun_moon .dmp-toggle-input:checked + .dmp-toggle-track .dmp-icon-moon {
+    opacity: 1;
+}
+
+/* ==========================================================================
+   Style 8: Sun & Moon Animated
+   ========================================================================== */
+
+.dmp-switch-sun_moon_animated {
+    display: inline-block;
+}
+
+.dmp-switch-sun_moon_animated .dmp-toggle-track {
+    display: block;
+    width: 70px;
+    height: 35px;
+    background: linear-gradient(135deg, #74b9ff 0%, #a29bfe 100%);
+    border-radius: 17.5px;
+    position: relative;
+    transition: background 0.5s ease;
+    overflow: hidden;
+}
+
+.dmp-switch-sun_moon_animated .dmp-toggle-track::before {
+    content: '';
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    width: 4px;
+    height: 4px;
+    background: rgba(255,255,255,0.8);
+    border-radius: 50%;
+    box-shadow:
+        15px 5px 0 0 rgba(255,255,255,0.6),
+        8px 12px 0 0 rgba(255,255,255,0.4);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.dmp-switch-sun_moon_animated .dmp-toggle-thumb {
+    position: absolute;
+    top: 2.5px;
+    left: 2.5px;
+    width: 30px;
+    height: 30px;
+    background: #ffeaa7;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    box-shadow: 0 0 20px rgba(255,234,167,0.8);
+}
+
+.dmp-switch-sun_moon_animated .dmp-icon-sun {
+    color: #f39c12;
+    transform: rotate(0deg);
+    transition: all 0.5s ease;
+}
+
+.dmp-switch-sun_moon_animated .dmp-icon-moon {
+    color: #dfe6e9;
+    position: absolute;
+    transform: rotate(-90deg);
+    opacity: 0;
+    transition: all 0.5s ease;
+}
+
+.dmp-switch-sun_moon_animated .dmp-toggle-input:checked + .dmp-toggle-track {
+    background: linear-gradient(135deg, #2d3436 0%, #0c0c1e 100%);
+}
+
+.dmp-switch-sun_moon_animated .dmp-toggle-input:checked + .dmp-toggle-track::before {
+    opacity: 1;
+}
+
+.dmp-switch-sun_moon_animated .dmp-toggle-input:checked + .dmp-toggle-track .dmp-toggle-thumb {
+    transform: translateX(35px);
+    background: #dfe6e9;
+    box-shadow: 0 0 20px rgba(223,230,233,0.5);
+}
+
+.dmp-switch-sun_moon_animated .dmp-toggle-input:checked + .dmp-toggle-track .dmp-icon-sun {
+    transform: rotate(90deg);
+    opacity: 0;
+}
+
+.dmp-switch-sun_moon_animated .dmp-toggle-input:checked + .dmp-toggle-track .dmp-icon-moon {
+    transform: rotate(0deg);
+    opacity: 1;
+}
+
+/* ==========================================================================
+   Style 9: Eclipse
+   ========================================================================== */
+
+.dmp-switch-eclipse {
+    display: inline-block;
+}
+
+.dmp-switch-eclipse .dmp-eclipse-container {
+    display: block;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #87ceeb, #fff);
+    border-radius: 50%;
+    position: relative;
+    cursor: pointer;
+    transition: background 0.8s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.dmp-switch-eclipse .dmp-eclipse-sun {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40px;
+    height: 40px;
+    background: #ffd700;
+    border-radius: 50%;
+    box-shadow: 0 0 30px rgba(255,215,0,0.8);
+    transition: all 0.8s ease;
+}
+
+.dmp-switch-eclipse .dmp-eclipse-moon {
+    position: absolute;
+    top: 50%;
+    left: -20%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    background: #2d3748;
+    border-radius: 50%;
+    transition: all 0.8s ease;
+}
+
+.dmp-switch-eclipse .dmp-toggle-input:checked + .dmp-eclipse-container {
+    background: linear-gradient(135deg, #1a1a2e, #2d3748);
+}
+
+.dmp-switch-eclipse .dmp-toggle-input:checked + .dmp-eclipse-container .dmp-eclipse-moon {
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.dmp-switch-eclipse .dmp-toggle-input:checked + .dmp-eclipse-container .dmp-eclipse-sun {
+    box-shadow: 0 0 40px rgba(255,215,0,0.3);
+}
+
+/* ==========================================================================
+   Style 10: Day & Night
+   ========================================================================== */
+
+.dmp-switch-day_night {
+    display: inline-block;
+}
+
+.dmp-switch-day_night .dmp-day-night-container {
+    display: block;
+    width: 80px;
+    height: 40px;
+    background: linear-gradient(to bottom, #87ceeb 0%, #e0f6ff 100%);
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: background 0.6s ease;
+}
+
+.dmp-switch-day_night .dmp-sky {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.dmp-switch-day_night .dmp-clouds {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    width: 20px;
+    height: 10px;
+    background: rgba(255,255,255,0.9);
+    border-radius: 10px;
+    transition: opacity 0.6s ease;
+}
+
+.dmp-switch-day_night .dmp-clouds::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: 5px;
+    width: 12px;
+    height: 12px;
+    background: rgba(255,255,255,0.9);
+    border-radius: 50%;
+}
+
+.dmp-switch-day_night .dmp-stars {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(circle, #fff 1px, transparent 1px);
+    background-size: 15px 15px;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+}
+
+.dmp-switch-day_night .dmp-celestial {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.dmp-switch-day_night .dmp-sun {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    width: 28px;
+    height: 28px;
+    background: #ffd700;
+    border-radius: 50%;
+    box-shadow: 0 0 15px rgba(255,215,0,0.8);
+    transition: all 0.6s ease;
+}
+
+.dmp-switch-day_night .dmp-moon {
+    position: absolute;
+    top: 6px;
+    right: -40px;
+    width: 28px;
+    height: 28px;
+    background: #f5f5dc;
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(245,245,220,0.5);
+    transition: all 0.6s ease;
+}
+
+.dmp-switch-day_night .dmp-toggle-input:checked + .dmp-day-night-container {
+    background: linear-gradient(to bottom, #0c1445 0%, #1a1a2e 100%);
+}
+
+.dmp-switch-day_night .dmp-toggle-input:checked + .dmp-day-night-container .dmp-clouds {
+    opacity: 0;
+}
+
+.dmp-switch-day_night .dmp-toggle-input:checked + .dmp-day-night-container .dmp-stars {
+    opacity: 1;
+}
+
+.dmp-switch-day_night .dmp-toggle-input:checked + .dmp-day-night-container .dmp-sun {
+    left: -40px;
+}
+
+.dmp-switch-day_night .dmp-toggle-input:checked + .dmp-day-night-container .dmp-moon {
+    right: 6px;
+}
+
+/* ==========================================================================
+   Style 11: Sunrise/Sunset
+   ========================================================================== */
+
+.dmp-switch-sunrise_sunset {
+    display: inline-block;
+}
+
+.dmp-switch-sunrise_sunset .dmp-toggle-track {
+    display: block;
+    width: 80px;
+    height: 36px;
+    background: linear-gradient(to right, #ff7e5f, #feb47b);
+    border-radius: 18px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.6s ease;
+}
+
+.dmp-switch-sunrise_sunset .dmp-toggle-track::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 10px;
+    background: linear-gradient(to top, rgba(0,0,0,0.3), transparent);
+}
+
+.dmp-switch-sunrise_sunset .dmp-toggle-thumb {
+    position: absolute;
+    bottom: 4px;
+    left: 4px;
+    width: 28px;
+    height: 28px;
+    background: #ffd700;
+    border-radius: 50%;
+    box-shadow: 0 0 20px rgba(255,215,0,0.6);
+    transition: all 0.6s ease;
+}
+
+.dmp-switch-sunrise_sunset .dmp-toggle-input:checked + .dmp-toggle-track {
+    background: linear-gradient(to right, #141e30, #243b55);
+}
+
+.dmp-switch-sunrise_sunset .dmp-toggle-input:checked + .dmp-toggle-track .dmp-toggle-thumb {
+    transform: translateX(44px);
+    background: #f5f5dc;
+    box-shadow: 0 0 15px rgba(245,245,220,0.4);
+}
+
+/* ==========================================================================
+   Style 12-17: Icon Buttons
+   ========================================================================== */
+
+/* Circle Icon */
+.dmp-switch-icon_circle {
+    width: 48px;
+    height: 48px;
+    background: #f0f0f0;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.dmp-switch-icon_circle:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.dmp-switch-icon_circle .dmp-icon-sun {
+    color: #f39c12;
+}
+
+.dmp-switch-icon_circle .dmp-icon-moon {
+    display: none;
+    color: #f1c40f;
+}
+
+.dmp-switch-icon_circle[aria-pressed="true"] {
+    background: #1a1a2e;
+}
+
+.dmp-switch-icon_circle[aria-pressed="true"] .dmp-icon-sun {
+    display: none;
+}
+
+.dmp-switch-icon_circle[aria-pressed="true"] .dmp-icon-moon {
+    display: block;
+}
+
+/* Square Icon */
+.dmp-switch-icon_square {
+    width: 44px;
+    height: 44px;
+    background: #f0f0f0;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.dmp-switch-icon_square:hover {
+    border-color: #1a1a2e;
+}
+
+.dmp-switch-icon_square .dmp-icon-sun {
+    color: #f39c12;
+}
+
+.dmp-switch-icon_square .dmp-icon-moon {
+    display: none;
+    color: #f1c40f;
+}
+
+.dmp-switch-icon_square[aria-pressed="true"] {
+    background: #1a1a2e;
+    border-color: #1a1a2e;
+}
+
+.dmp-switch-icon_square[aria-pressed="true"] .dmp-icon-sun {
+    display: none;
+}
+
+.dmp-switch-icon_square[aria-pressed="true"] .dmp-icon-moon {
+    display: block;
+}
+
+/* Rounded Icon */
+.dmp-switch-icon_rounded {
+    width: 46px;
+    height: 46px;
+    background: linear-gradient(135deg, #f5f5f5, #e0e0e0);
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.dmp-switch-icon_rounded:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.dmp-switch-icon_rounded .dmp-icon-sun {
+    color: #f39c12;
+}
+
+.dmp-switch-icon_rounded .dmp-icon-moon {
+    display: none;
+    color: #f1c40f;
+}
+
+.dmp-switch-icon_rounded[aria-pressed="true"] {
+    background: linear-gradient(135deg, #1a1a2e, #2d3748);
+}
+
+.dmp-switch-icon_rounded[aria-pressed="true"] .dmp-icon-sun {
+    display: none;
+}
+
+.dmp-switch-icon_rounded[aria-pressed="true"] .dmp-icon-moon {
+    display: block;
+}
+
+/* Pill Button */
+.dmp-switch-icon_pill {
+    height: 40px;
+    padding: 0 20px;
+    background: #f0f0f0;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+.dmp-switch-icon_pill:hover {
+    background: #e0e0e0;
+}
+
+.dmp-switch-icon_pill .dmp-icon-sun {
+    color: #f39c12;
+}
+
+.dmp-switch-icon_pill .dmp-icon-moon {
+    display: none;
+    color: #f1c40f;
+}
+
+.dmp-switch-icon_pill[aria-pressed="true"] {
+    background: #1a1a2e;
+    color: #fff;
+}
+
+.dmp-switch-icon_pill[aria-pressed="true"] .dmp-icon-sun {
+    display: none;
+}
+
+.dmp-switch-icon_pill[aria-pressed="true"] .dmp-icon-moon {
+    display: block;
+}
+
+/* FAB Style */
+.dmp-switch-icon_fab {
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(135deg, #f39c12, #e74c3c);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(243,156,18,0.4);
+}
+
+.dmp-switch-icon_fab:hover {
+    transform: scale(1.1) rotate(15deg);
+    box-shadow: 0 6px 20px rgba(243,156,18,0.5);
+}
+
+.dmp-switch-icon_fab .dmp-icon-sun,
+.dmp-switch-icon_fab .dmp-icon-moon {
+    color: #fff;
+}
+
+.dmp-switch-icon_fab .dmp-icon-moon {
+    display: none;
+}
+
+.dmp-switch-icon_fab[aria-pressed="true"] {
+    background: linear-gradient(135deg, #2d3748, #1a1a2e);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.dmp-switch-icon_fab[aria-pressed="true"] .dmp-icon-sun {
+    display: none;
+}
+
+.dmp-switch-icon_fab[aria-pressed="true"] .dmp-icon-moon {
+    display: block;
+}
+
+/* Minimal Icon */
+.dmp-switch-icon_minimal {
+    width: 40px;
+    height: 40px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.dmp-switch-icon_minimal:hover {
+    transform: rotate(15deg);
+}
+
+.dmp-switch-icon_minimal .dmp-icon-sun {
+    color: #f39c12;
+    width: 24px;
+    height: 24px;
+}
+
+.dmp-switch-icon_minimal .dmp-icon-moon {
+    display: none;
+    color: #f1c40f;
+    width: 24px;
+    height: 24px;
+}
+
+.dmp-switch-icon_minimal[aria-pressed="true"] .dmp-icon-sun {
+    display: none;
+}
+
+.dmp-switch-icon_minimal[aria-pressed="true"] .dmp-icon-moon {
+    display: block;
+}
+
+/* ==========================================================================
+   Style 18-20: Text Buttons
+   ========================================================================== */
+
+/* Text Label */
+.dmp-switch-text_label {
+    padding: 10px 20px;
+    background: #f0f0f0;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.dmp-switch-text_label:hover {
+    border-color: #1a1a2e;
+}
+
+.dmp-switch-text_label .dmp-label-dark {
+    display: none;
+}
+
+.dmp-switch-text_label[aria-pressed="true"] {
+    background: #1a1a2e;
+    border-color: #1a1a2e;
+    color: #fff;
+}
+
+.dmp-switch-text_label[aria-pressed="true"] .dmp-label-light {
+    display: none;
+}
+
+.dmp-switch-text_label[aria-pressed="true"] .dmp-label-dark {
+    display: inline;
+}
+
+/* Icon + Label */
+.dmp-switch-text_icon_label {
+    padding: 10px 20px;
+    background: #f0f0f0;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.dmp-switch-text_icon_label:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.dmp-switch-text_icon_label .dmp-button-icon .dmp-icon-moon {
+    display: none;
+}
+
+.dmp-switch-text_icon_label .dmp-icon-sun {
+    color: #f39c12;
+}
+
+.dmp-switch-text_icon_label .dmp-label-dark {
+    display: none;
+}
+
+.dmp-switch-text_icon_label[aria-pressed="true"] {
+    background: #1a1a2e;
+    color: #fff;
+}
+
+.dmp-switch-text_icon_label[aria-pressed="true"] .dmp-button-icon .dmp-icon-sun {
+    display: none;
+}
+
+.dmp-switch-text_icon_label[aria-pressed="true"] .dmp-button-icon .dmp-icon-moon {
+    display: block;
+    color: #f1c40f;
+}
+
+.dmp-switch-text_icon_label[aria-pressed="true"] .dmp-label-light {
+    display: none;
+}
+
+.dmp-switch-text_icon_label[aria-pressed="true"] .dmp-label-dark {
+    display: inline;
+}
+
+/* Toggle + Label */
+.dmp-switch-text_toggle_label {
+    padding: 8px 16px;
+    background: #fff;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: all 0.3s ease;
+}
+
+.dmp-switch-text_toggle_label .dmp-button-icon {
+    width: 40px;
+    height: 22px;
+    background: #e0e0e0;
+    border-radius: 11px;
+    position: relative;
+    transition: background 0.3s ease;
+}
+
+.dmp-switch-text_toggle_label .dmp-button-icon::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 18px;
+    height: 18px;
+    background: #fff;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.dmp-switch-text_toggle_label .dmp-button-icon .dmp-icon-sun,
+.dmp-switch-text_toggle_label .dmp-button-icon .dmp-icon-moon {
+    display: none;
+}
+
+.dmp-switch-text_toggle_label .dmp-label-dark {
+    display: none;
+}
+
+.dmp-switch-text_toggle_label[aria-pressed="true"] .dmp-button-icon {
+    background: #1a1a2e;
+}
+
+.dmp-switch-text_toggle_label[aria-pressed="true"] .dmp-button-icon::after {
+    transform: translateX(18px);
+}
+
+.dmp-switch-text_toggle_label[aria-pressed="true"] .dmp-label-light {
+    display: none;
+}
+
+.dmp-switch-text_toggle_label[aria-pressed="true"] .dmp-label-dark {
+    display: inline;
+}
+
+/* ==========================================================================
+   Style 21-26: Animated Switches
+   ========================================================================== */
+
+/* Morphing */
+.dmp-switch-animated_morph {
+    display: inline-block;
+}
+
+.dmp-switch-animated_morph .dmp-animated-container {
+    display: block;
+    cursor: pointer;
+}
+
+.dmp-switch-animated_morph .dmp-animated-track {
+    display: block;
+    width: 64px;
+    height: 32px;
+    background: linear-gradient(135deg, #74b9ff, #a29bfe);
+    border-radius: 16px;
+    position: relative;
+    transition: all 0.5s ease;
+}
+
+.dmp-switch-animated_morph .dmp-animated-thumb {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 28px;
+    height: 28px;
+    background: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.dmp-switch-animated_morph .dmp-icon-sun {
+    color: #f39c12;
+    transition: all 0.3s ease;
+}
+
+.dmp-switch-animated_morph .dmp-icon-moon {
+    position: absolute;
+    color: #6c5ce7;
+    opacity: 0;
+    transform: scale(0);
+    transition: all 0.3s ease;
+}
+
+.dmp-switch-animated_morph .dmp-toggle-input:checked + .dmp-animated-container .dmp-animated-track {
+    background: linear-gradient(135deg, #2d3436, #636e72);
+}
+
+.dmp-switch-animated_morph .dmp-toggle-input:checked + .dmp-animated-container .dmp-animated-thumb {
+    transform: translateX(32px);
+    border-radius: 8px;
+}
+
+.dmp-switch-animated_morph .dmp-toggle-input:checked + .dmp-animated-container .dmp-icon-sun {
+    opacity: 0;
+    transform: scale(0);
+}
+
+.dmp-switch-animated_morph .dmp-toggle-input:checked + .dmp-animated-container .dmp-icon-moon {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Flip Card */
+.dmp-switch-animated_flip {
+    display: inline-block;
+    perspective: 200px;
+}
+
+.dmp-switch-animated_flip .dmp-animated-container {
+    display: block;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+}
+
+.dmp-switch-animated_flip .dmp-animated-track {
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.6s ease;
+}
+
+.dmp-switch-animated_flip .dmp-animated-thumb {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backface-visibility: hidden;
+    border-radius: 12px;
+}
+
+.dmp-switch-animated_flip .dmp-icon-sun {
+    color: #f39c12;
+    background: #fff7e6;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(243,156,18,0.3);
+}
+
+.dmp-switch-animated_flip .dmp-icon-moon {
+    position: absolute;
+    color: #f1c40f;
+    background: #1a1a2e;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    transform: rotateY(180deg);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.dmp-switch-animated_flip .dmp-toggle-input:checked + .dmp-animated-container .dmp-animated-track {
+    transform: rotateY(180deg);
+}
+
+/* Slide Effect */
+.dmp-switch-animated_slide {
+    display: inline-block;
+}
+
+.dmp-switch-animated_slide .dmp-animated-container {
+    display: block;
+    width: 100px;
+    height: 40px;
+    background: #f0f0f0;
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.dmp-switch-animated_slide .dmp-animated-track {
+    position: absolute;
+    top: 0;
+    left: -50%;
+    width: 200%;
+    height: 100%;
+    display: flex;
+    transition: transform 0.5s ease;
+}
+
+.dmp-switch-animated_slide .dmp-animated-track::before,
+.dmp-switch-animated_slide .dmp-animated-track::after {
+    content: '';
+    width: 50%;
+    height: 100%;
+}
+
+.dmp-switch-animated_slide .dmp-animated-track::before {
+    background: linear-gradient(135deg, #87ceeb, #fff);
+}
+
+.dmp-switch-animated_slide .dmp-animated-track::after {
+    background: linear-gradient(135deg, #1a1a2e, #2d3748);
+}
+
+.dmp-switch-animated_slide .dmp-animated-thumb {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: 32px;
+    height: 32px;
+    background: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    z-index: 1;
+    transition: transform 0.5s ease;
+}
+
+.dmp-switch-animated_slide .dmp-icon-sun {
+    color: #f39c12;
+    transition: opacity 0.3s ease;
+}
+
+.dmp-switch-animated_slide .dmp-icon-moon {
+    position: absolute;
+    color: #6c5ce7;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.dmp-switch-animated_slide .dmp-toggle-input:checked + .dmp-animated-container .dmp-animated-track {
+    transform: translateX(25%);
+}
+
+.dmp-switch-animated_slide .dmp-toggle-input:checked + .dmp-animated-container .dmp-animated-thumb {
+    transform: translateX(60px);
+}
+
+.dmp-switch-animated_slide .dmp-toggle-input:checked + .dmp-animated-container .dmp-icon-sun {
+    opacity: 0;
+}
+
+.dmp-switch-animated_slide .dmp-toggle-input:checked + .dmp-animated-container .dmp-icon-moon {
+    opacity: 1;
+}
+
+/* Glow Effect */
+.dmp-switch-animated_glow {
+    display: inline-block;
+}
+
+.dmp-switch-animated_glow .dmp-animated-container {
+    display: block;
+    cursor: pointer;
+}
+
+.dmp-switch-animated_glow .dmp-animated-track {
+    display: block;
+    width: 64px;
+    height: 32px;
+    background: #e0e0e0;
+    border-radius: 16px;
+    position: relative;
+    transition: all 0.4s ease;
+}
+
+.dmp-switch-animated_glow .dmp-animated-thumb {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 28px;
+    height: 28px;
+    background: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.4s ease;
+    box-shadow: 0 0 0 0 rgba(243,156,18,0);
+}
+
+.dmp-switch-animated_glow .dmp-icon-sun {
+    color: #f39c12;
+}
+
+.dmp-switch-animated_glow .dmp-icon-moon {
+    position: absolute;
+    color: #6c5ce7;
+    opacity: 0;
+}
+
+.dmp-switch-animated_glow .dmp-toggle-input:checked + .dmp-animated-container .dmp-animated-track {
+    background: #1a1a2e;
+}
+
+.dmp-switch-animated_glow .dmp-toggle-input:checked + .dmp-animated-container .dmp-animated-thumb {
+    transform: translateX(32px);
+    box-shadow: 0 0 20px 5px rgba(108,92,231,0.5);
+}
+
+.dmp-switch-animated_glow .dmp-toggle-input:checked + .dmp-animated-container .dmp-icon-sun {
+    opacity: 0;
+}
+
+.dmp-switch-animated_glow .dmp-toggle-input:checked + .dmp-animated-container .dmp-icon-moon {
+    opacity: 1;
+}
+
+/* Pulse Effect */
+.dmp-switch-animated_pulse {
+    display: inline-block;
+}
+
+.dmp-switch-animated_pulse .dmp-animated-container {
+    display: block;
+    cursor: pointer;
+}
+
+.dmp-switch-animated_pulse .dmp-animated-track {
+    display: block;
+    width: 64px;
+    height: 32px;
+    background: #e0e0e0;
+    border-radius: 16px;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.dmp-switch-animated_pulse .dmp-animated-thumb {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 28px;
+    height: 28px;
+    background: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+.dmp-switch-animated_pulse .dmp-icon-sun {
+    color: #f39c12;
+    animation: none;
+}
+
+.dmp-switch-animated_pulse .dmp-icon-moon {
+    position: absolute;
+    color: #6c5ce7;
+    opacity: 0;
+}
+
+.dmp-switch-animated_pulse .dmp-toggle-input:checked + .dmp-animated-container .dmp-animated-track {
+    background: #1a1a2e;
+}
+
+.dmp-switch-animated_pulse .dmp-toggle-input:checked + .dmp-animated-container .dmp-animated-thumb {
+    transform: translateX(32px);
+    animation: dmp-pulse 2s infinite;
+}
+
+.dmp-switch-animated_pulse .dmp-toggle-input:checked + .dmp-animated-container .dmp-icon-sun {
+    opacity: 0;
+}
+
+.dmp-switch-animated_pulse .dmp-toggle-input:checked + .dmp-animated-container .dmp-icon-moon {
+    opacity: 1;
+}
+
+@keyframes dmp-pulse {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(108,92,231,0.4);
+    }
+    50% {
+        box-shadow: 0 0 0 10px rgba(108,92,231,0);
+    }
+}
+
+/* Bounce */
+.dmp-switch-animated_bounce {
+    display: inline-block;
+}
+
+.dmp-switch-animated_bounce .dmp-animated-container {
+    display: block;
+    cursor: pointer;
+}
+
+.dmp-switch-animated_bounce .dmp-animated-track {
+    display: block;
+    width: 64px;
+    height: 32px;
+    background: #e0e0e0;
+    border-radius: 16px;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.dmp-switch-animated_bounce .dmp-animated-thumb {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 28px;
+    height: 28px;
+    background: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.dmp-switch-animated_bounce .dmp-icon-sun {
+    color: #f39c12;
+}
+
+.dmp-switch-animated_bounce .dmp-icon-moon {
+    position: absolute;
+    color: #6c5ce7;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.dmp-switch-animated_bounce .dmp-toggle-input:checked + .dmp-animated-container .dmp-animated-track {
+    background: #1a1a2e;
+}
+
+.dmp-switch-animated_bounce .dmp-toggle-input:checked + .dmp-animated-container .dmp-animated-thumb {
+    transform: translateX(32px);
+}
+
+.dmp-switch-animated_bounce .dmp-toggle-input:checked + .dmp-animated-container .dmp-icon-sun {
+    opacity: 0;
+}
+
+.dmp-switch-animated_bounce .dmp-toggle-input:checked + .dmp-animated-container .dmp-icon-moon {
+    opacity: 1;
+}
+
+/* ==========================================================================
+   Focus States (Accessibility)
+   ========================================================================== */
+
+.dmp-switch:focus,
+.dmp-switch:focus-visible {
+    outline: 2px solid #4da8da;
+    outline-offset: 2px;
+}
+
+.dmp-toggle-input:focus + .dmp-toggle-track,
+.dmp-toggle-input:focus + .dmp-animated-container,
+.dmp-toggle-input:focus + .dmp-eclipse-container,
+.dmp-toggle-input:focus + .dmp-day-night-container {
+    box-shadow: 0 0 0 3px rgba(77, 168, 218, 0.3);
+}
+
+/* ==========================================================================
+   Reduced Motion
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+    .dmp-switch,
+    .dmp-switch *,
+    .dmp-toggle-track,
+    .dmp-toggle-thumb,
+    .dmp-animated-container,
+    .dmp-animated-track,
+    .dmp-animated-thumb {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+    }
+}
