@@ -62,7 +62,11 @@ class DMP_Analytics {
      */
     private function get_session_id() {
         if (!isset($_COOKIE['dmp_session_id'])) {
-            return wp_generate_uuid4();
+            $session_id = wp_generate_uuid4();
+            // Persist session for consistent analytics tracking
+            setcookie('dmp_session_id', $session_id, time() + MONTH_IN_SECONDS, COOKIEPATH, COOKIE_DOMAIN);
+            $_COOKIE['dmp_session_id'] = $session_id;
+            return $session_id;
         }
         return sanitize_text_field($_COOKIE['dmp_session_id']);
     }

@@ -191,18 +191,27 @@
         },
 
         /**
-         * Save settings
+         * Save partial settings payload
          */
-        saveSettings: function() {
+        saveOptionsFragment: function(settings, options) {
             var self = this;
-            var $btn = $('.dmp-save-btn');
-            var originalText = $btn.html();
+            var opts = $.extend({
+                button: null,
+                loadingText: '<span class="dashicons dashicons-update spin"></span> Saving...',
+                successMessage: '',
+                restoreButtonContent: true,
+                onSuccess: null,
+                onComplete: null
+            }, options || {});
 
-            $btn.prop('disabled', true).html('<span class="dashicons dashicons-update spin"></span> Saving...');
+            var $btn = opts.button ? $(opts.button) : null;
+            var originalHtml = $btn ? $btn.html() : null;
 
-            var settings = this.collectFormData();
+            if ($btn) {
+                $btn.prop('disabled', true).html(opts.loadingText);
+            }
 
-            $.ajax({
+            return $.ajax({
                 url: dmpAdmin.ajaxUrl,
                 type: 'POST',
                 data: {
@@ -212,17 +221,49 @@
                 },
                 success: function(response) {
                     if (response.success) {
-                        self.showNotice('Settings saved successfully!', 'success');
-                        self.hasUnsavedChanges = false;
+                        if (opts.successMessage) {
+                            self.showNotice(opts.successMessage, 'success');
+                        }
+
+                        if (typeof opts.onSuccess === 'function') {
+                            opts.onSuccess(response.data);
+                        }
                     } else {
-                        self.showNotice('Error saving settings: ' + response.data, 'error');
+                        self.showNotice('Error saving settings: ' + (response.data || 'Unknown error'), 'error');
                     }
                 },
                 error: function() {
                     self.showNotice('Network error. Please try again.', 'error');
                 },
                 complete: function() {
-                    $btn.prop('disabled', false).html(originalText);
+                    if ($btn) {
+                        $btn.prop('disabled', false);
+
+                        if (opts.restoreButtonContent) {
+                            $btn.html(originalHtml);
+                        }
+                    }
+
+                    if (typeof opts.onComplete === 'function') {
+                        opts.onComplete();
+                    }
+                }
+            });
+        },
+
+        /**
+         * Save settings
+         */
+        saveSettings: function() {
+            var self = this;
+            var $btn = $('.dmp-save-btn');
+            var settings = this.collectFormData();
+
+            this.saveOptionsFragment(settings, {
+                button: $btn,
+                successMessage: 'Settings saved successfully!',
+                onSuccess: function() {
+                    self.hasUnsavedChanges = false;
                 }
             });
         },
@@ -345,5 +386,8 @@
 
     // Add spinning animation
     $('<style>.dashicons.spin { animation: dmp-spin 1s linear infinite; } @keyframes dmp-spin { 100% { transform: rotate(360deg); } }</style>').appendTo('head');
+
+    // Expose helper for other admin pages
+    window.DmpAdminApp = DmpAdmin;
 
 })(jQuery);
