@@ -25,6 +25,10 @@ $custom_colors = $options['custom_colors'];
             <p><?php esc_html_e('Choose from professionally designed color themes or create your own.', 'dark-mode-pro'); ?></p>
         </div>
         <div class="dmp-header-actions">
+            <button type="button" class="button button-primary dmp-save-btn">
+                <span class="dashicons dashicons-saved"></span>
+                <?php esc_html_e('Save Settings', 'dark-mode-pro'); ?>
+            </button>
             <a href="<?php echo esc_url(admin_url('admin.php?page=dark-mode-pro')); ?>" class="button">
                 <span class="dashicons dashicons-arrow-left-alt"></span>
                 <?php esc_html_e('Back to Settings', 'dark-mode-pro'); ?>
@@ -295,24 +299,22 @@ function dmpWaitForAdminApp(callback) {
 
 jQuery(document).ready(function($) {
     dmpWaitForAdminApp(function(adminApp) {
+        var selectedPreset = '<?php echo esc_js($current_preset); ?>';
+
         $('.dmp-select-preset-btn').on('click', function() {
             var preset = $(this).data('preset');
             var $card = $(this).closest('.dmp-preset-card');
 
-            adminApp.saveOptionsFragment({ color_preset: preset }, {
-                button: $(this),
-                restoreButtonContent: false,
-                successMessage: '<?php echo esc_js(__('Color preset saved.', 'dark-mode-pro')); ?>',
-                onSuccess: function() {
-                    $('.dmp-preset-card, .dmp-custom-colors-card').removeClass('active');
-                    $('.dmp-select-preset-btn').text('<?php echo esc_js(__('Select', 'dark-mode-pro')); ?>');
-                    $('.dmp-active-badge').remove();
+            // Update UI only
+            $('.dmp-preset-card, .dmp-custom-colors-card').removeClass('active');
+            $('.dmp-select-preset-btn').text('<?php echo esc_js(__('Select', 'dark-mode-pro')); ?>');
+            $('.dmp-active-badge').remove();
 
-                    $card.addClass('active');
-                    $card.find('.dmp-select-preset-btn').text('<?php echo esc_js(__('Selected', 'dark-mode-pro')); ?>');
-                    $card.find('.dmp-preset-info').append('<span class="dmp-active-badge"><?php echo esc_js(__('Active', 'dark-mode-pro')); ?></span>');
-                }
-            });
+            $card.addClass('active');
+            $card.find('.dmp-select-preset-btn').text('<?php echo esc_js(__('Selected', 'dark-mode-pro')); ?>');
+            $card.find('.dmp-preset-info').append('<span class="dmp-active-badge"><?php echo esc_js(__('Active', 'dark-mode-pro')); ?></span>');
+
+            selectedPreset = preset;
         });
 
         // Save custom colors
@@ -334,7 +336,28 @@ jQuery(document).ready(function($) {
                     $('.dmp-select-preset-btn').text('<?php echo esc_js(__('Select', 'dark-mode-pro')); ?>');
                     $('.dmp-active-badge').remove();
                     $('.dmp-custom-colors-card').addClass('active');
+                    selectedPreset = 'custom';
                 }
+            });
+        });
+
+        // Main Save button handler
+        $('.dmp-save-btn').on('click', function() {
+            var data = { color_preset: selectedPreset };
+
+            // If custom is selected, also save the custom colors from inputs
+            if (selectedPreset === 'custom') {
+                var customColors = {};
+                $('.dmp-color-picker').each(function() {
+                    var key = $(this).data('color-key');
+                    customColors[key] = $(this).val();
+                });
+                data.custom_colors = customColors;
+            }
+
+            adminApp.saveOptionsFragment(data, {
+                button: $(this),
+                successMessage: '<?php echo esc_js(__('Settings saved successfully!', 'dark-mode-pro')); ?>'
             });
         });
 

@@ -335,8 +335,12 @@
             var self = this;
 
             // Toggle switch clicks
-            $(document).on('click change', '.dmp-switch, .dmp-toggle-input', function(e) {
+            $(document).on('click change', '.dmp-switch', function(e) {
                 e.preventDefault();
+                self.toggle();
+            });
+
+            $(document).on('change', '.dmp-toggle-input', function(e) {
                 self.toggle();
             });
 
