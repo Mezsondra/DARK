@@ -201,17 +201,38 @@
          */
         applyMode: function(animate) {
             var body = document.body;
+            var html = document.documentElement;
             var duration = animate ? this.config.transitionDuration : 0;
+            var colorEngine = this.config.colorEngine || 'css_variables';
 
             // Set transition duration
-            document.documentElement.style.setProperty('--dmp-transition-duration', duration + 'ms');
+            html.style.setProperty('--dmp-transition-duration', duration + 'ms');
 
             if (this.isDark) {
                 body.classList.add('dmp-dark-mode');
-                this.applyColors();
-                this.applyTypography();
+                html.classList.add('dmp-dark-mode'); // For filter mode selector
+
+                if (colorEngine === 'css_variables') {
+                    this.applyColors();
+                    this.applyTypography();
+                } else if (colorEngine === 'css_filter') {
+                    html.classList.add('dmp-type-filter');
+                    this.applyTypography();
+                } else if (colorEngine === 'js_extraction') {
+                    this.applyDynamicColors();
+                    this.applyTypography();
+                }
+
             } else {
                 body.classList.remove('dmp-dark-mode');
+                html.classList.remove('dmp-dark-mode');
+
+                if (colorEngine === 'css_filter') {
+                    html.classList.remove('dmp-type-filter');
+                } else if (colorEngine === 'js_extraction') {
+                    this.removeDynamicColors();
+                }
+
                 this.removeTypography();
             }
 
@@ -241,6 +262,158 @@
                     }
                 }
             }
+        },
+
+        /**
+         * Apply Dynamic Colors (JS Extraction Mode)
+         */
+        applyDynamicColors: function() {
+            var self = this;
+            // Optimizing selector to avoid too many elements, but keeping it broad enough
+            var elements = document.querySelectorAll('body, body *:not(script):not(style):not(noscript):not([class*="dmp-"])');
+
+            // Batch DOM reads
+            var updates = [];
+
+            elements.forEach(function(el) {
+                var style = window.getComputedStyle(el);
+                var update = { el: el, styles: {} };
+                var hasUpdates = false;
+
+                // Mark element as processed
+                if (!el.hasAttribute('data-dmp-processed')) {
+                    el.setAttribute('data-dmp-processed', 'true');
+                    // Store original inline styles to restore later
+                    el.setAttribute('data-dmp-inline-bg', el.style.backgroundColor);
+                    el.setAttribute('data-dmp-inline-color', el.style.color);
+                    el.setAttribute('data-dmp-inline-border', el.style.borderColor);
+                }
+
+                // Process Background
+                var bgColor = style.backgroundColor;
+                if (self.isValidColor(bgColor) && self.isLight(bgColor)) {
+                    var darkBg = self.invertColor(bgColor, true);
+                    update.styles.backgroundColor = darkBg;
+                    hasUpdates = true;
+                }
+
+                // Process Text Color
+                var textColor = style.color;
+                if (self.isValidColor(textColor) && self.isDarkColor(textColor)) {
+                    var lightText = self.invertColor(textColor, false);
+                    update.styles.color = lightText;
+                    hasUpdates = true;
+                }
+
+                // Process Border Color
+                var borderColor = style.borderColor;
+                if (self.isValidColor(borderColor) && self.isDarkColor(borderColor)) {
+                     var lightBorder = self.invertColor(borderColor, false);
+                     update.styles.borderColor = lightBorder;
+                     hasUpdates = true;
+                }
+
+                if (hasUpdates) {
+                    updates.push(update);
+                }
+            });
+
+            // Batch DOM writes
+            updates.forEach(function(item) {
+                for (var prop in item.styles) {
+                    item.el.style[prop] = item.styles[prop];
+                }
+            });
+        },
+
+        /**
+         * Remove Dynamic Colors
+         */
+        removeDynamicColors: function() {
+            var elements = document.querySelectorAll('[data-dmp-processed]');
+            elements.forEach(function(el) {
+                // Restore original inline styles (or empty string if none existed)
+                el.style.backgroundColor = el.getAttribute('data-dmp-inline-bg') || '';
+                el.style.color = el.getAttribute('data-dmp-inline-color') || '';
+                el.style.borderColor = el.getAttribute('data-dmp-inline-border') || '';
+
+                // Cleanup attributes
+                el.removeAttribute('data-dmp-processed');
+                el.removeAttribute('data-dmp-inline-bg');
+                el.removeAttribute('data-dmp-inline-color');
+                el.removeAttribute('data-dmp-inline-border');
+            });
+        },
+
+        /**
+         * Helper: Check if color is valid and not transparent
+         */
+        isValidColor: function(color) {
+            return color && color !== 'rgba(0, 0, 0, 0)' && color !== 'transparent';
+        },
+
+        /**
+         * Helper: Check if color is light
+         */
+        isLight: function(color) {
+            var rgb = this.parseColor(color);
+            if (!rgb) return false;
+            // HSP equation from http://alienryderflex.com/hsp.html
+            var hsp = Math.sqrt(
+                0.299 * (rgb.r * rgb.r) +
+                0.587 * (rgb.g * rgb.g) +
+                0.114 * (rgb.b * rgb.b)
+            );
+            return hsp > 127.5;
+        },
+
+        /**
+         * Helper: Check if color is dark
+         */
+        isDarkColor: function(color) {
+            return !this.isLight(color);
+        },
+
+        /**
+         * Helper: Parse RGB/RGBA string
+         */
+        parseColor: function(color) {
+            var match = color.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)/);
+            return match ? { r: parseInt(match[1]), g: parseInt(match[2]), b: parseInt(match[3]) } : null;
+        },
+
+        /**
+         * Helper: Invert color intelligently
+         */
+        invertColor: function(color, darken) {
+             var rgb = this.parseColor(color);
+             if (!rgb) return color;
+
+             // Simple inversion logic for now
+             var r, g, b;
+
+             if (darken) {
+                 // Make it dark (for backgrounds)
+                 // Map 255 -> 26 (approx #1a1a1a), 0 -> 0
+                 var factor = 0.1;
+                 r = Math.floor(rgb.r * factor);
+                 g = Math.floor(rgb.g * factor);
+                 b = Math.floor(rgb.b * factor);
+
+                 // If original was white, make it specific dark
+                 if (rgb.r > 250 && rgb.g > 250 && rgb.b > 250) {
+                     return '#1a1a2e'; // Use plugin theme background
+                 }
+             } else {
+                 // Make it light (for text)
+                 // Map 0 -> 229 (approx #e5e5e5), 255 -> 255
+                 var min = 200;
+                 r = Math.max(min, 255 - rgb.r);
+                 g = Math.max(min, 255 - rgb.g);
+                 b = Math.max(min, 255 - rgb.b);
+             }
+
+             return 'rgb(' + r + ',' + g + ',' + b + ')';
         },
 
         /**

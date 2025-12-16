@@ -555,3 +555,26 @@ body.dmp-dark-mode [data-no-dark] * {
         transition-duration: 0.01ms !important;
     }
 }
+
+/* ==========================================================================
+   Smart Color Inversion (Filter Mode)
+   ========================================================================== */
+
+html.dmp-dark-mode.dmp-type-filter {
+    filter: invert(1) hue-rotate(180deg);
+}
+
+/* Revert images and media to look normal */
+html.dmp-dark-mode.dmp-type-filter img,
+html.dmp-dark-mode.dmp-type-filter video,
+html.dmp-dark-mode.dmp-type-filter iframe,
+html.dmp-dark-mode.dmp-type-filter canvas,
+html.dmp-dark-mode.dmp-type-filter svg,
+html.dmp-dark-mode.dmp-type-filter [data-no-filter] {
+    filter: invert(1) hue-rotate(180deg);
+}
+
+/* Fullscreen fix */
+html.dmp-dark-mode.dmp-type-filter:fullscreen {
+    background-color: white;
+}
