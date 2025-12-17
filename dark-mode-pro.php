@@ -75,6 +75,7 @@ final class Dark_Mode_Pro {
             // General Settings
             'enabled' => true,
             'default_mode' => 'light',
+            'color_engine' => 'css_variables',
             'remember_choice' => true,
             'admin_dark_mode' => false,
 
@@ -277,6 +278,7 @@ final class Dark_Mode_Pro {
             'nonce' => wp_create_nonce('dmp_nonce'),
             'options' => array(
                 'defaultMode' => $this->options['default_mode'],
+                'colorEngine' => $this->options['color_engine'],
                 'rememberChoice' => $this->options['remember_choice'],
                 'switchStyle' => $this->options['switch_style'],
                 'switchPosition' => $this->options['switch_position'],

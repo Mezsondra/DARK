@@ -91,6 +91,16 @@ $time_modes = DMP_Time_Based::get_modes();
                     </div>
 
                     <div class="dmp-field">
+                        <label for="color_engine"><?php esc_html_e('Color Engine', 'dark-mode-pro'); ?></label>
+                        <select name="color_engine" id="color_engine">
+                            <option value="css_variables" <?php selected($options['color_engine'], 'css_variables'); ?>><?php esc_html_e('Standard (CSS Variables)', 'dark-mode-pro'); ?></option>
+                            <option value="css_filter" <?php selected($options['color_engine'], 'css_filter'); ?>><?php esc_html_e('Smart Color Inversion (CSS Filter)', 'dark-mode-pro'); ?></option>
+                            <option value="js_extraction" <?php selected($options['color_engine'], 'js_extraction'); ?>><?php esc_html_e('Dynamic Color Processing (JavaScript)', 'dark-mode-pro'); ?></option>
+                        </select>
+                        <p class="dmp-field-desc"><?php esc_html_e('Choose how dark mode colors are applied. "CSS Filter" and "Dynamic" offer better coverage for complex themes.', 'dark-mode-pro'); ?></p>
+                    </div>
+
+                    <div class="dmp-field">
                         <label class="dmp-toggle-field">
                             <input type="checkbox" name="remember_choice" <?php checked($options['remember_choice']); ?>>
                             <span class="dmp-toggle-switch"></span>
