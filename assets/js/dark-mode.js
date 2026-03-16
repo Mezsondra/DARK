@@ -493,11 +493,30 @@
          * Set mode directly
          */
         setMode: function(mode) {
+            var previousMode = this.isDark;
             var newIsDark = mode === 'dark';
-            if (newIsDark !== this.isDark) {
-                this.isDark = newIsDark;
-                this.modeStartTime = Date.now();
-                this.applyMode(true);
+
+            if (newIsDark === this.isDark) {
+                return;
+            }
+
+            if (this.config.analyticsEnabled && this.config.trackTimeSpent && this.modeStartTime) {
+                var duration = Math.round((Date.now() - this.modeStartTime) / 1000);
+                this.trackEvent('time_spent', {
+                    mode: previousMode ? 'dark' : 'light',
+                    duration: duration
+                });
+            }
+
+            this.isDark = newIsDark;
+            this.modeStartTime = Date.now();
+            this.applyMode(true);
+
+            if (this.config.analyticsEnabled && this.config.trackToggleEvents) {
+                this.trackEvent('toggle', {
+                    from_mode: previousMode ? 'dark' : 'light',
+                    to_mode: this.isDark ? 'dark' : 'light'
+                });
             }
         },
 
@@ -507,18 +526,13 @@
         bindEvents: function() {
             var self = this;
 
-            // Toggle switch clicks
-            $(document).on('click change', '.dmp-switch', function(e) {
-                e.preventDefault();
-                self.toggle();
+            // Native checkbox toggles (label-based styles)
+            $(document).on('change', '.dmp-toggle-input', function() {
+                self.setMode(this.checked ? 'dark' : 'light');
             });
 
-            $(document).on('change', '.dmp-toggle-input', function(e) {
-                self.toggle();
-            });
-
-            // Button clicks
-            $(document).on('click', '[class*="dmp-switch-icon_"], [class*="dmp-switch-text_"]', function(e) {
+            // Button-based toggles
+            $(document).on('click', 'button.dmp-switch, [class*="dmp-switch-icon_"], [class*="dmp-switch-text_"]', function(e) {
                 e.preventDefault();
                 self.toggle();
             });

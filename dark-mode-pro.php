@@ -174,6 +174,7 @@ final class Dark_Mode_Pro {
 
         // Cron for email reports
         add_action('dmp_send_email_report', array($this, 'send_email_report'));
+        add_filter('cron_schedules', array($this, 'register_cron_schedules'));
 
         // Shortcode
         add_shortcode('dark_mode_toggle', array($this, 'shortcode_toggle'));
@@ -205,6 +206,20 @@ final class Dark_Mode_Pro {
      */
     public function deactivate() {
         wp_clear_scheduled_hook('dmp_send_email_report');
+    }
+
+    /**
+     * Register custom cron schedules
+     */
+    public function register_cron_schedules($schedules) {
+        if (!isset($schedules['weekly'])) {
+            $schedules['weekly'] = array(
+                'interval' => WEEK_IN_SECONDS,
+                'display' => __('Once Weekly', 'dark-mode-pro'),
+            );
+        }
+
+        return $schedules;
     }
 
     /**
@@ -527,8 +542,16 @@ final class Dark_Mode_Pro {
             wp_send_json_error('Analytics disabled');
         }
 
-        $event_type = sanitize_text_field($_POST['event_type'] ?? '');
-        $event_data = isset($_POST['event_data']) ? json_decode(stripslashes($_POST['event_data']), true) : array();
+        $event_type = sanitize_key($_POST['event_type'] ?? '');
+        if (empty($event_type)) {
+            wp_send_json_error('Invalid event type');
+        }
+
+        $raw_event_data = isset($_POST['event_data']) ? wp_unslash($_POST['event_data']) : '';
+        $event_data = !empty($raw_event_data) ? json_decode($raw_event_data, true) : array();
+        if (!is_array($event_data)) {
+            $event_data = array();
+        }
 
         $analytics = new DMP_Analytics();
         $result = $analytics->track_event($event_type, $event_data);

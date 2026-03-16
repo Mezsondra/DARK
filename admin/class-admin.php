@@ -133,7 +133,7 @@ class DMP_Admin {
 
         // String fields
         $string_fields = array(
-            'default_mode', 'switch_style', 'switch_position', 'switch_size',
+            'default_mode', 'color_engine', 'switch_style', 'switch_position', 'switch_size',
             'color_preset', 'time_based_mode', 'schedule_start', 'schedule_end',
             'email_report_frequency', 'keyboard_shortcut'
         );
