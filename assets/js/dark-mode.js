@@ -19,6 +19,7 @@
         sessionId: null,
         modeStartTime: null,
         initialized: false,
+        logoCacheInitialized: false,
 
         /**
          * Initialize
@@ -236,6 +237,9 @@
                 this.removeTypography();
             }
 
+            // Update logo presentation for mode
+            this.updateLogos();
+
             // Update toggle switches
             this.updateToggles();
 
@@ -445,6 +449,88 @@
             root.style.removeProperty('--dmp-font-size-adjust');
             root.style.removeProperty('--dmp-line-height-adjust');
             root.style.removeProperty('--dmp-letter-spacing');
+        },
+
+        /**
+         * Get logo elements affected by dark mode logo options
+         */
+        getLogoElements: function() {
+            return document.querySelectorAll('[data-dmp-logo], .custom-logo, .custom-logo-link img, .site-logo img, .site-branding img.logo');
+        },
+
+        /**
+         * Cache original logo metadata for safe restore
+         */
+        cacheLogoMetadata: function() {
+            if (this.logoCacheInitialized) {
+                return;
+            }
+
+            this.getLogoElements().forEach(function(logo) {
+                if (!logo.dataset.dmpOriginalSrc) {
+                    var currentSrc = logo.getAttribute('src') || '';
+                    logo.dataset.dmpOriginalSrc = currentSrc;
+                }
+
+                if (!logo.dataset.dmpOriginalFilter) {
+                    logo.dataset.dmpOriginalFilter = logo.style.filter || '';
+                }
+
+                if (!logo.dataset.dmpOriginalSrcset) {
+                    logo.dataset.dmpOriginalSrcset = logo.getAttribute('srcset') || '';
+                }
+            });
+
+            this.logoCacheInitialized = true;
+        },
+
+        /**
+         * Update logo source/filter by mode
+         */
+        updateLogos: function() {
+            var darkLogo = this.config.darkModeLogo || '';
+            var invertLogo = !!this.config.invertLogoInDark;
+
+            this.cacheLogoMetadata();
+
+            var isDark = this.isDark;
+
+            this.getLogoElements().forEach(function(logo) {
+                if (logo.dataset.dmpOriginalSrc === undefined) {
+                    logo.dataset.dmpOriginalSrc = logo.getAttribute('src') || '';
+                }
+
+                if (logo.dataset.dmpOriginalFilter === undefined) {
+                    logo.dataset.dmpOriginalFilter = logo.style.filter || '';
+                }
+
+                if (logo.dataset.dmpOriginalSrcset === undefined) {
+                    logo.dataset.dmpOriginalSrcset = logo.getAttribute('srcset') || '';
+                }
+
+                if (isDark) {
+                    if (darkLogo) {
+                        logo.setAttribute('src', darkLogo);
+                        logo.removeAttribute('srcset');
+                    }
+
+                    if (invertLogo) {
+                        logo.style.filter = 'invert(1) hue-rotate(180deg)';
+                    } else {
+                        logo.style.filter = logo.dataset.dmpOriginalFilter || '';
+                    }
+                } else {
+                    logo.setAttribute('src', logo.dataset.dmpOriginalSrc || logo.getAttribute('src') || '');
+
+                    if (logo.dataset.dmpOriginalSrcset) {
+                        logo.setAttribute('srcset', logo.dataset.dmpOriginalSrcset);
+                    } else {
+                        logo.removeAttribute('srcset');
+                    }
+
+                    logo.style.filter = logo.dataset.dmpOriginalFilter || '';
+                }
+            });
         },
 
         /**

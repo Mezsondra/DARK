@@ -78,6 +78,8 @@ final class Dark_Mode_Pro {
             'color_engine' => 'css_variables',
             'remember_choice' => true,
             'admin_dark_mode' => false,
+            'dark_mode_logo' => '',
+            'invert_logo_in_dark' => false,
 
             // Toggle Switch
             'switch_style' => 'classic',
@@ -314,6 +316,8 @@ final class Dark_Mode_Pro {
                 'lineHeightAdjust' => $this->options['dark_line_height_adjust'],
                 'letterSpacing' => $this->options['dark_letter_spacing'],
                 'fontSmoothing' => $this->options['font_smoothing'],
+                'darkModeLogo' => $this->options['dark_mode_logo'],
+                'invertLogoInDark' => $this->options['invert_logo_in_dark'],
             ),
             'colorPreset' => $this->get_active_color_preset(),
             'sunTimes' => $this->get_sun_times(),
