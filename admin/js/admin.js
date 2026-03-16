@@ -163,7 +163,7 @@
             });
 
             // Text inputs, selects, textareas
-            $form.find('input[type="text"], input[type="email"], input[type="number"], input[type="time"], input[type="range"], select, textarea').not('[name^="custom_colors"]').each(function() {
+            $form.find('input[type="text"], input[type="email"], input[type="url"], input[type="number"], input[type="time"], input[type="range"], select, textarea').not('[name^="custom_colors"]').each(function() {
                 var name = $(this).attr('name');
                 if (name) {
                     // Handle multi-select

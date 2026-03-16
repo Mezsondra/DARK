@@ -9,7 +9,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-$options = get_option('dmp_options', dark_mode_pro()->get_default_options());
+$options = wp_parse_args(get_option('dmp_options', array()), dark_mode_pro()->get_default_options());
 $switch_styles = DMP_Switch_Styles::get_styles();
 $switch_positions = DMP_Switch_Styles::get_positions();
 $switch_sizes = DMP_Switch_Styles::get_sizes();
@@ -116,6 +116,22 @@ $time_modes = DMP_Time_Based::get_modes();
                             <span class="dmp-field-label"><?php esc_html_e('Enable Admin Dark Mode', 'dark-mode-pro'); ?></span>
                         </label>
                         <p class="dmp-field-desc"><?php esc_html_e('Apply dark mode to WordPress admin area.', 'dark-mode-pro'); ?></p>
+                    </div>
+
+
+                    <div class="dmp-field">
+                        <label for="dark_mode_logo"><?php esc_html_e('Dark Mode Logo URL', 'dark-mode-pro'); ?></label>
+                        <input type="url" name="dark_mode_logo" id="dark_mode_logo" value="<?php echo esc_attr($options['dark_mode_logo']); ?>" placeholder="https://example.com/logo-dark.svg">
+                        <p class="dmp-field-desc"><?php esc_html_e('Optional: provide an alternate logo image URL used only when dark mode is active.', 'dark-mode-pro'); ?></p>
+                    </div>
+
+                    <div class="dmp-field">
+                        <label class="dmp-toggle-field">
+                            <input type="checkbox" name="invert_logo_in_dark" <?php checked($options['invert_logo_in_dark']); ?>>
+                            <span class="dmp-toggle-switch"></span>
+                            <span class="dmp-field-label"><?php esc_html_e('Invert Logo in Dark Mode', 'dark-mode-pro'); ?></span>
+                        </label>
+                        <p class="dmp-field-desc"><?php esc_html_e('Apply CSS invert filter to supported logo images while dark mode is active.', 'dark-mode-pro'); ?></p>
                     </div>
                 </div>
             </div>

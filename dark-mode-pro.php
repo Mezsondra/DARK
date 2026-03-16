@@ -78,6 +78,8 @@ final class Dark_Mode_Pro {
             'color_engine' => 'css_variables',
             'remember_choice' => true,
             'admin_dark_mode' => false,
+            'dark_mode_logo' => '',
+            'invert_logo_in_dark' => false,
 
             // Toggle Switch
             'switch_style' => 'classic',
@@ -174,6 +176,7 @@ final class Dark_Mode_Pro {
 
         // Cron for email reports
         add_action('dmp_send_email_report', array($this, 'send_email_report'));
+        add_filter('cron_schedules', array($this, 'register_cron_schedules'));
 
         // Shortcode
         add_shortcode('dark_mode_toggle', array($this, 'shortcode_toggle'));
@@ -205,6 +208,20 @@ final class Dark_Mode_Pro {
      */
     public function deactivate() {
         wp_clear_scheduled_hook('dmp_send_email_report');
+    }
+
+    /**
+     * Register custom cron schedules
+     */
+    public function register_cron_schedules($schedules) {
+        if (!isset($schedules['weekly'])) {
+            $schedules['weekly'] = array(
+                'interval' => WEEK_IN_SECONDS,
+                'display' => __('Once Weekly', 'dark-mode-pro'),
+            );
+        }
+
+        return $schedules;
     }
 
     /**
@@ -299,6 +316,8 @@ final class Dark_Mode_Pro {
                 'lineHeightAdjust' => $this->options['dark_line_height_adjust'],
                 'letterSpacing' => $this->options['dark_letter_spacing'],
                 'fontSmoothing' => $this->options['font_smoothing'],
+                'darkModeLogo' => $this->options['dark_mode_logo'],
+                'invertLogoInDark' => $this->options['invert_logo_in_dark'],
             ),
             'colorPreset' => $this->get_active_color_preset(),
             'sunTimes' => $this->get_sun_times(),
@@ -422,18 +441,33 @@ final class Dark_Mode_Pro {
             <?php endif; ?>
 
             <?php if (!empty($this->options['custom_css_light'])): ?>
-            body:not(.dmp-dark-mode) {
-                <?php echo wp_strip_all_tags($this->options['custom_css_light']); ?>
-            }
+            <?php echo $this->format_custom_css($this->options['custom_css_light'], 'body:not(.dmp-dark-mode)'); ?>
             <?php endif; ?>
 
             <?php if (!empty($this->options['custom_css_dark'])): ?>
-            body.dmp-dark-mode {
-                <?php echo wp_strip_all_tags($this->options['custom_css_dark']); ?>
-            }
+            <?php echo $this->format_custom_css($this->options['custom_css_dark'], 'body.dmp-dark-mode'); ?>
             <?php endif; ?>
         </style>
         <?php
+    }
+
+    /**
+     * Format custom CSS safely and support both declaration-only and full-rule snippets
+     */
+    private function format_custom_css($css, $scope_selector) {
+        $css = trim((string) $css);
+        if ($css === '') {
+            return '';
+        }
+
+        $css = wp_kses($css, array());
+
+        // Backward compatibility: if user saved declarations only, scope them.
+        if (strpos($css, '{') === false) {
+            return sprintf("%s { %s }", $scope_selector, $css);
+        }
+
+        return $css;
     }
 
     /**
@@ -527,8 +561,16 @@ final class Dark_Mode_Pro {
             wp_send_json_error('Analytics disabled');
         }
 
-        $event_type = sanitize_text_field($_POST['event_type'] ?? '');
-        $event_data = isset($_POST['event_data']) ? json_decode(stripslashes($_POST['event_data']), true) : array();
+        $event_type = sanitize_key($_POST['event_type'] ?? '');
+        if (empty($event_type)) {
+            wp_send_json_error('Invalid event type');
+        }
+
+        $raw_event_data = isset($_POST['event_data']) ? wp_unslash($_POST['event_data']) : '';
+        $event_data = !empty($raw_event_data) ? json_decode($raw_event_data, true) : array();
+        if (!is_array($event_data)) {
+            $event_data = array();
+        }
 
         $analytics = new DMP_Analytics();
         $result = $analytics->track_event($event_type, $event_data);

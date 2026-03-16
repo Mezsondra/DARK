@@ -124,7 +124,8 @@ class DMP_Admin {
             'enabled', 'remember_choice', 'admin_dark_mode', 'show_on_mobile',
             'time_based_enabled', 'use_visitor_timezone', 'typography_enabled',
             'font_smoothing', 'analytics_enabled', 'track_toggle_events',
-            'track_time_spent', 'email_reports_enabled', 'enable_keyboard_shortcut'
+            'track_time_spent', 'email_reports_enabled', 'enable_keyboard_shortcut',
+            'invert_logo_in_dark'
         );
 
         foreach ($boolean_fields as $field) {
@@ -133,7 +134,7 @@ class DMP_Admin {
 
         // String fields
         $string_fields = array(
-            'default_mode', 'switch_style', 'switch_position', 'switch_size',
+            'default_mode', 'color_engine', 'switch_style', 'switch_position', 'switch_size',
             'color_preset', 'time_based_mode', 'schedule_start', 'schedule_end',
             'email_report_frequency', 'keyboard_shortcut'
         );
@@ -141,6 +142,10 @@ class DMP_Admin {
         foreach ($string_fields as $field) {
             $sanitized[$field] = isset($input[$field]) ? sanitize_text_field($input[$field]) : '';
         }
+
+
+        // URL fields
+        $sanitized['dark_mode_logo'] = isset($input['dark_mode_logo']) ? esc_url_raw($input['dark_mode_logo']) : '';
 
         // Integer fields
         $int_fields = array(
