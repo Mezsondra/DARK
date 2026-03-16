@@ -437,18 +437,33 @@ final class Dark_Mode_Pro {
             <?php endif; ?>
 
             <?php if (!empty($this->options['custom_css_light'])): ?>
-            body:not(.dmp-dark-mode) {
-                <?php echo wp_strip_all_tags($this->options['custom_css_light']); ?>
-            }
+            <?php echo $this->format_custom_css($this->options['custom_css_light'], 'body:not(.dmp-dark-mode)'); ?>
             <?php endif; ?>
 
             <?php if (!empty($this->options['custom_css_dark'])): ?>
-            body.dmp-dark-mode {
-                <?php echo wp_strip_all_tags($this->options['custom_css_dark']); ?>
-            }
+            <?php echo $this->format_custom_css($this->options['custom_css_dark'], 'body.dmp-dark-mode'); ?>
             <?php endif; ?>
         </style>
         <?php
+    }
+
+    /**
+     * Format custom CSS safely and support both declaration-only and full-rule snippets
+     */
+    private function format_custom_css($css, $scope_selector) {
+        $css = trim((string) $css);
+        if ($css === '') {
+            return '';
+        }
+
+        $css = wp_kses($css, array());
+
+        // Backward compatibility: if user saved declarations only, scope them.
+        if (strpos($css, '{') === false) {
+            return sprintf("%s { %s }", $scope_selector, $css);
+        }
+
+        return $css;
     }
 
     /**
